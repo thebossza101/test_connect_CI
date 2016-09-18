@@ -1,0 +1,73 @@
+<!--
+  Generated template for the DetailsPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+  <ion-card-header>
+    EMPCODE : <B>{{items.EMPCODE}}</B>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+    <ion-item>
+      <p>EMPDESC :</p>
+      <h2><B>{{items.EMPDESC}}</B></h2>
+    </ion-item>
+    <ion-item>
+      <p>CUSTCODE :</p>
+      <h2><B>{{items.CUSTCODE}}</B></h2>
+    </ion-item>
+    <ion-item>
+      <p>VENDCODE :</p>
+      <h2><B>{{items.VENDCODE}}</B></h2>
+    </ion-item>
+    <ion-item>
+      <p>POSITION :</p>
+      <h2><B>{{items.POSITION}}</B></h2>
+    </ion-item>
+    <ion-item>
+      <p>CTCADR1 :</p>
+      <h2><B>{{items.CTCADR1}}</B></h2>
+    </ion-item>
+    <ion-item>
+      <p>CTCADR2 :</p>
+      <h2><B>{{items.CTCADR2}}</B></h2>
+    </ion-item>
+    <ion-item>
+      <p>EMAIL :</p>
+      <h2><B>{{items.EMAIL}}</B></h2>
+    </ion-item>
+    <ion-item [hidden]="hidden_PDF">
+      <h2>PDF : <B>{{items.CTCADR2}}</B></h2>
+      <button clear item-right (click)="ViewPDF(items.CTCADR2)">View</button>
+    </ion-item>
+  </ion-list>
+  </ion-card-content>
+  <ion-row no-padding>
+      <ion-col>
+        <button small  full (click)="edit(items)">
+          <ion-icon name="build"></ion-icon>
+          Edit
+        </button>
+      </ion-col>
+      <ion-col>
+        <button small danger  full (click)="delete(items.EMPCODE)">
+          <ion-icon ios="ios-trash" md="md-trash"></ion-icon>
+          delete
+        </button>
+      </ion-col>
+    </ion-row>
+</ion-card>
+<button fab fab-bottom fab-right fab-fixed (click)="add()"><ion-icon name="add"></ion-icon></button>
+</ion-content>

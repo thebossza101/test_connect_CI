@@ -1,0 +1,62 @@
+<!--
+  Generated template for the AddeditlistPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!--
+  Generated template for the DetailsPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{title}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>EMPCODE <ion-icon name="warning" warning [hidden]="icon_EMPCODE">{{MSG_EMPCODE}}</ion-icon></ion-label>
+      <ion-input [disabled]="disabled_EMPCODE" [(ngModel)]="EMPCODE" type="text" clearInput></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>EMPDESC </ion-label>
+      <ion-input [(ngModel)]="EMPDESC" type="text" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>CUSTCODE </ion-label>
+      <ion-input [(ngModel)]="CUSTCODE" type="text" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>VENDCODE </ion-label>
+      <ion-input [(ngModel)]="VENDCODE" type="text" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>POSITION </ion-label>
+      <ion-input [(ngModel)]="POSITION" type="text" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>CTCADR1 </ion-label>
+      <ion-input [(ngModel)]="CTCADR1" type="text" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>CTCADR2 <ion-icon name="warning" warning [hidden]="icon_CTCADR2">{{MSG_CTCADR2}}</ion-icon></ion-label>
+      <ion-input [(ngModel)]="CTCADR2" type="text" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>EMAIL</ion-label>
+      <ion-input [(ngModel)]="EMAIL" type="text" clearInput></ion-input>
+    </ion-item>
+  </ion-list>
+  <div padding>
+    <button primary block  (click)="Saveclick(EMPCODE,EMPDESC,CUSTCODE,VENDCODE,POSITION,CTCADR1,CTCADR2,EMAIL)">Save</button>
+  </div>
+</ion-content>
