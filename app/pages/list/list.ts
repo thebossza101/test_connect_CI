@@ -45,14 +45,12 @@ export class ListPage {
     let val = ev.target.value;
     //console.log(val);
     // if the value is an empty string don't filter the items
-    
-      this.items = this.list.get_EMPCODE_EMPDESC(val).then(data => {
-        if (Object.keys(data).length > 0) {
-          return data
-        } else {
-          return [{ EMPCODE: 'ไม่พบข้อมูล', EMPDESC: 'โปรดลองใหม่อีกครั้ง' }]
-        }
-      });
+
+    if (val && val.trim() != '') {
+    this.items = this.items.filter((item) => {
+      return (item.EMPCODE.toLowerCase().indexOf(val.toLowerCase()) > -1)||(item.EMPDESC.toLowerCase().indexOf(val.toLowerCase()) > -1);
+    })
+  }
       //console.log(this.items);
 
 
