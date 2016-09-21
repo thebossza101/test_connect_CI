@@ -14,7 +14,7 @@
 
 
 <ion-content padding class="list">
-  <ion-searchbar (ionInput)="getItems($event)" placeholder='Search EMPCODE or EMPDESC'></ion-searchbar>
+  <ion-searchbar (ionInput)="getItems($event)" placeholder='Search EMPCODE'></ion-searchbar>
   <ion-list>
     <ion-item *ngFor="let item of items | async" (click)="itemSelected(item)">
      <h2>{{item.EMPCODE}}</h2>

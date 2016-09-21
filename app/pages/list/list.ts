@@ -40,7 +40,7 @@ export class ListPage {
 initializeItems() {
   this.initializeData = this.items = this.list.get_EMPCODE_EMPDESC('').then(data => {
     if (Object.keys(data).length > 0) {
-   //console.log('555');
+   //console.log(data);
     return data;
 
     } else {
@@ -60,7 +60,7 @@ initializeItems() {
 this.data = data;
 //console.log(this.data);
 return this.data = this.data.filter((item) => {
-        return (item.EMPCODE.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.EMPDESC.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return (item.EMPCODE.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
 //console.log(this.data);
 
@@ -70,6 +70,8 @@ return this.data = this.data.filter((item) => {
  })
     // set val to the value of the searchbar
     // if the value is an empty string don't filter the items
+
+
 
 
   }
