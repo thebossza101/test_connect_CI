@@ -53,7 +53,7 @@ export class List {
       // then on the response it'll map the JSON data to a parsed JS ject.
 
       // Next we process the data and resolve the promise with thnew data.
-      console.log(body.toString())
+    //  console.log(body.toString())
       this.http.post(endpoint, body.toString(), { headers: headers })
 
         .map(res => res.json())

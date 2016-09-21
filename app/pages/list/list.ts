@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Platform ,NavParams} from 'ionic-angular';
+import { NavController, Platform ,NavParams, LoadingController} from 'ionic-angular';
 
 import { List } from '../../providers/list/list';
 import { DetailsPage } from '../details/details';
@@ -19,41 +19,60 @@ import { AddeditlistPage } from '../addeditlist/addeditlist';
 export class ListPage {
   items: any = null;
   push:any;
+  data:any;
+  initializeData:any;
   //test: any = null;
-  constructor(private navCtrl: NavController, private list: List, public platform: Platform,private navParams: NavParams) {
-      this.initializeItems();
+  constructor(private navCtrl: NavController, private list: List, public platform: Platform,private navParams: NavParams,public loadingCtrl: LoadingController) {
+    let loading = this.loadingCtrl.create({
+    content: 'Please wait...'
+  });
+  loading.present();
+      this.initializeItems().then(()=>loading.dismiss());
       if(navParams.get('push')){
         //console.log(navParams.get('push'))
+         loading.dismiss();
         this.navCtrl.push(DetailsPage,{data:navParams.get('push')});
+
       }
     //console.log( this.test);
   }
 
-  initializeItems() {
-    this.items = this.list.get_EMPCODE_EMPDESC('').then(data => {
-      if (Object.keys(data).length > 0) {
-        return data
-      } else {
-        return [{ EMPCODE: 'ไม่พบข้อมูล', EMPDESC: 'ลองใหม่อีกครั้ง' }]
-      }
-    });
+initializeItems() {
+  this.initializeData = this.items = this.list.get_EMPCODE_EMPDESC('').then(data => {
+    if (Object.keys(data).length > 0) {
+   //console.log('555');
+    return data;
+
+    } else {
+      return [{ EMPCODE: 'ไม่พบข้อมูล', EMPDESC: 'ลองใหม่อีกครั้ง' }]
+    }
+  });
+    return this.initializeData
+
   }
 
   getItems(ev: any) {
-
-    // set val to the value of the searchbar
-    let val = ev.target.value;
+    var val = ev.target.value;
+    this.items = this.initializeData;
     //console.log(val);
+ this.items = this.items.then((data)=>{
+   if (val && val.trim() != '') {
+this.data = data;
+//console.log(this.data);
+return this.data = this.data.filter((item) => {
+        return (item.EMPCODE.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.EMPDESC.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+//console.log(this.data);
+
+      }else{
+        this.items = this.initializeData;
+      }
+ })
+    // set val to the value of the searchbar
     // if the value is an empty string don't filter the items
-    
-      this.items = this.list.get_EMPCODE_EMPDESC(val).then(data => {
-        if (Object.keys(data).length > 0) {
-          return data
-        } else {
-          return [{ EMPCODE: 'ไม่พบข้อมูล', EMPDESC: 'โปรดลองใหม่อีกครั้ง' }]
-        }
-      });
-      //console.log(this.items);
+
+
+
 
 
   }
