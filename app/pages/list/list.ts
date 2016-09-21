@@ -71,18 +71,6 @@ return this.data = this.data.filter((item) => {
     // set val to the value of the searchbar
     // if the value is an empty string don't filter the items
 
-<<<<<<< HEAD
-
-
-=======
-    if (val && val.trim() != '') {
-    this.items = this.items.filter((item) => {
-      return (item.EMPCODE.toLowerCase().indexOf(val.toLowerCase()) > -1)||(item.EMPDESC.toLowerCase().indexOf(val.toLowerCase()) > -1);
-    })
-  }
-      //console.log(this.items);
->>>>>>> origin/master
-
 
   }
   itemSelected(item){
