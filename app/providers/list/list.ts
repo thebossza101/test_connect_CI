@@ -38,7 +38,7 @@ export class List {
 
     //  }
     // don't have the data ye
-    return new Promise(resolve => {
+    return new Promise((resolve,reject) => {
 
       const body = new URLSearchParams();
       Object.keys(data).forEach(key => {
@@ -68,7 +68,8 @@ export class List {
 
           resolve(this.data);
 
-        },(er)=>{console.log(er);});
+        },(er)=>{
+          reject(er);});
 
     });
 

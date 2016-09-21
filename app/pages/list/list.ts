@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Platform ,NavParams, LoadingController} from 'ionic-angular';
+import { NavController, Platform ,NavParams, LoadingController,Storage, SqlStorage} from 'ionic-angular';
 
 import { List } from '../../providers/list/list';
 import { DetailsPage } from '../details/details';
@@ -21,8 +21,10 @@ export class ListPage {
   push:any;
   data:any;
   initializeData:any;
+  sql: Storage;
   //test: any = null;
   constructor(private navCtrl: NavController, private list: List, public platform: Platform,private navParams: NavParams,public loadingCtrl: LoadingController) {
+
     let loading = this.loadingCtrl.create({
     content: 'Please wait...'
   });
@@ -35,19 +37,74 @@ export class ListPage {
 
       }
     //console.log( this.test);
+
+    //sql
+    //this.insert_sql();
   }
-
 initializeItems() {
-  this.initializeData = this.items = this.list.get_EMPCODE_EMPDESC('').then(data => {
-    if (Object.keys(data).length > 0) {
-   //console.log(data);
-    return data;
+  this.initializeData = this.list.get_EMPCODE_EMPDESC('').then(data => {
+  //  console.log(data);
+ this.insert_sql(data);
+ return data;
+  }).catch((er)=>{
+    //console.log( this.getsql() );
 
-    } else {
-      return [{ EMPCODE: 'ไม่พบข้อมูล', EMPDESC: 'ลองใหม่อีกครั้ง' }]
-    }
+      return this.getsql();
   });
+this.items = this.initializeData;
     return this.initializeData
+
+  }
+  getsql(){
+    this.sql = new Storage(SqlStorage,{name: 'smf_hit'});//เลือกฐานข้อมูล
+    return this.sql.query("SELECT * FROM SMEMPL").then((data)=>{
+//console.log(data.res.rows.item(0).name);
+    //console.log(data.res.rows.item(0).price);
+
+    if (data.res.rows.length > 0) {
+
+     var newitems = [];
+
+    //วนลูปจากแถวในตาราง และ push เข้า array
+
+    for (let i = 0; i < data.res.rows.length; i++) {
+
+    newitems.push({
+
+    EMPCODE: data.res.rows.item(i).EMPCODE,
+
+    EMPDESC: data.res.rows.item(i).EMPDESC
+
+    });
+
+    }
+    return newitems;
+
+    }
+
+    });
+
+
+  }
+  insert_sql(data){
+
+  this.sql = new Storage(SqlStorage,{name: 'smf_hit'});//เลือกฐานข้อมูล
+
+  data.forEach(data => {
+    var data_sql = data;
+    this.sql.query("SELECT EMPCODE FROM SMEMPL WHERE EMPCODE = '"+data.EMPCODE+"'").then((data)=>{
+          if (data.res.rows.length <= 0) {
+              this.sql.query("INSERT INTO SMEMPL (EMPCODE,EMPDESC) VALUES ('"+data_sql.EMPCODE+"','"+data_sql.EMPDESC+"')");
+        }
+
+    });
+
+
+  });
+  //  this.sql = new Storage(SqlStorage,{name: 'smf_hit'});//เลือกฐานข้อมูล
+  //  this.sql.query("INSERT INTO foods (EMPCODE,EMPDESC) VALUES ('ข้าวผัด',100)");
+  //  this.sql.query("INSERT INTO foods (name,price) VALUES ('ข้าวกระเพราหม',300)");
+  //  this.sql.query("INSERT INTO foods (name,price) VALUES ('ยํารวมมิตร',200)");
 
   }
 

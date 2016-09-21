@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ionicBootstrap, Platform } from 'ionic-angular';
+import { ionicBootstrap, Platform,Storage, SqlStorage} from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
 import { LoginPage } from './pages/login/login';
@@ -29,7 +29,7 @@ const cloudSettings: CloudSettings = {
 })
 export class MyApp {
   rootPage: any = LoginPage;
-
+  sql: Storage;
   constructor(public platform: Platform,public push: Push) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -49,6 +49,19 @@ export class MyApp {
 
       StatusBar.styleDefault();
     });
+
+    this.createDB();
+  }
+  createDB(){
+
+
+    //สร้างฐานข้อมูลใหม่ ชือว่า mydb
+
+this.sql = new Storage(SqlStorage,{name: 'smf_hit'});
+
+//สร้างตาราง ชือว่า foods ประกอบด้วย id (auto) , name, price
+
+this.sql.query('CREATE TABLE IF NOT EXISTS SMEMPL (id INTEGER PRIMARY KEY AUTOINCREMENT, EMPCODE TEXT, EMPDESC TEXT)');
   }
 }
 
